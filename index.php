@@ -9,10 +9,10 @@ use Controllers\AuthController;
 use Controllers\ProductoController;
 use Controllers\PublicController;
 
-// 1. Limpiamos la ruta para que no importe si tiene "/" al final
+//Limpiamos la ruta para que no importe si tiene "/" al final
 $route = isset($_GET['route']) ? rtrim($_GET['route'], '/') : 'catalogo';
 
-// 2. Separamos la ruta. Si es "productos/edit/2" -> $parts será ["productos", "edit", "2"]
+// Separamos la ruta. Si es "productos/edit/2" -> $parts será ["productos", "edit", "2"]
 $parts = explode('/', $route);
 
 // Creamos una ruta base para el switch (sin el ID): "productos/edit"
@@ -22,7 +22,6 @@ $authController = new AuthController();
 $productoController = new ProductoController();
 $publicController = new PublicController();
 
-// 3. CAMBIO CLAVE: Evaluamos $controller_route en lugar de $route
 switch($controller_route){
     case 'login':
         $authController->showLogin();
