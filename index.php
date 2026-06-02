@@ -5,6 +5,8 @@ use Controllers\AuthController;
 use Controllers\ProductoController;
 use Controllers\PublicController;
 
+// rtrim quita la "/" del final si existe
+$route = isset($_GET['route']) ? rtrim($_GET['route'], '/') : 'catalogo';
 
 $route = $_GET['route'] ?? 'catalogo';
 
