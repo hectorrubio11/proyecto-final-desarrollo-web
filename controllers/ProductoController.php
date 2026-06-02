@@ -17,7 +17,7 @@ class ProductoController{
         }
 
         if (!isset($_SESSION['admin'])){
-            header('Location: index.php?route=login');
+            header('Location: '. BASE_URL .'login');
             exit;
         }
     }
@@ -54,7 +54,7 @@ class ProductoController{
             $data['existencia'] === ''
         ){
             $_SESSION['error'] = 'Todos los campos son obligatorios.';
-            header('Location: index.php?route=productos/create');
+            header('Location: '. BASE_URL .'productos/create');
             exit;
         }
 
@@ -62,14 +62,14 @@ class ProductoController{
         || !is_numeric($data['existencia'])) {
             $_SESSION['error'] = 'Precio de compra, precio de venta y 
             existencia deben ser numéricos.';
-            header('Location: index.php?route=productos/create');
+            header('Location: '. BASE_URL .'productos/create');
             exit;
         }
 
         if ((float)$data['precio_compra'] < 0 || (float)$data['precio_venta'] < 0 ||
         (int)$data['existencia'] < 0 ){
             $_SESSION['error'] = 'No se permiten valores negativos.';
-            header('Location: index.php?route=productos/create');
+            header('Location: '. BASE_URL .'productos/create');
             exit;
         }
 
@@ -79,7 +79,7 @@ class ProductoController{
             $_SESSION['error'] = 'No fue posible registrar el producto';
         }
 
-        header('Location: index.php?route=productos');
+        header('Location: '. BASE_URL .'productos');
         exit;
     }
 
@@ -90,7 +90,7 @@ class ProductoController{
 
         if (!$producto){
             $_SESSION['error'] = 'Producto no encontrado.';
-            header('Location: index.php?route=productos');
+            header('Location: '. BASE_URL .'productos');
             exit;
         }
 
@@ -113,7 +113,7 @@ class ProductoController{
 
         if ($id <= 0){
             $_SESSION['error'] = 'ID inválido.';
-            header('Location: index.php?route=productos');
+            header('Location: '. BASE_URL .'productos');
             exit;
         }
 
@@ -126,7 +126,7 @@ class ProductoController{
             $data['existencia'] === '')
         {
             $_SESSION['error'] = 'Todos los campos son obligatorios.';
-            header('Location: index.php?route=productos/edit&id=' . $id);
+            header('Location: '. BASE_URL .'productos/edit/' . $id);
             exit;
         }
 
@@ -134,14 +134,14 @@ class ProductoController{
         || !is_numeric($data['existencia'])) {
             $_SESSION['error'] = 'Precio de compra, precio de venta y 
             existencia deben ser numéricos.';
-            header('Location: index.php?route=productos/edit&id=' . $id);
+            header('Location: '. BASE_URL .'productos/edit/' . $id);
             exit;
         }
 
         if ((float)$data['precio_compra'] < 0 || (float)$data['precio_venta'] < 0 ||
         (int)$data['existencia'] < 0 ){
             $_SESSION['error'] = 'No se permiten valores negativos.';
-            header('Location: index.php?route=productos/edit&id=' . $id);
+            header('Location: '. BASE_URL .'productos/edit/' . $id);
             exit;
         }
 
@@ -151,7 +151,7 @@ class ProductoController{
             $_SESSION['error'] = 'No fue posible actualizar el producto.';
         }
 
-        header('Location: index.php?route=productos');
+        header('Location: '. BASE_URL .'productos');
         exit;
 
     }
@@ -162,7 +162,7 @@ class ProductoController{
 
         if ($id <= 0){
             $_SESSION['error'] = 'ID inválido.';
-            header('Location: index.php?route=productos');
+            header('Location: '. BASE_URL .'productos');
             exit;
         }
 
@@ -172,7 +172,7 @@ class ProductoController{
             $_SESSION['error'] = 'No fue posible eliminar el producto.';
         }
 
-        header('Location: index.php?route=productos');
+        header('Location: '. BASE_URL .'productos');
         exit;
 
     }

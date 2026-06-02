@@ -18,7 +18,7 @@ class AuthController{
 
         if ($username === '' || $password === ''){
             $_SESSION['error'] = 'Todos los campos son obligatorios.';
-            header('Location: index.php?route=login');
+            header('Location: '. BASE_URL .'login');
             exit;
         }
 
@@ -33,12 +33,12 @@ class AuthController{
             ];
             
             $_SESSION['success'] = 'Bienvenido, '.$usuario['nombre_completo'] . '.';
-            header('Location: index.php?route=productos');
+            header('Location: '. BASE_URL .'productos');
             exit;
         }
 
         $_SESSION['error'] = 'Credenciales incorrectas.';
-        header('Location: index.php?route=login');
+        header('Location: '. BASE_URL .'login');
         exit;
 
     }
@@ -48,7 +48,7 @@ class AuthController{
             session_start();
         }
         session_destroy();
-        header('Location: index.php?route=login');
+        header('Location: '. BASE_URL .'login');
         exit;
     }
 }

@@ -11,10 +11,10 @@
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a href="index.php?route=catalogo" class="navbar-brand">Tienda MVC</a>
+                <a href="<?= BASE_URL ?>" class="navbar-brand">Tienda MVC</a>
                 <div>
-                    <a href="index.php?route=catalogo" class="btn btn-outline-light btn-sm me-2">Catálogo</a>
-                    <a href="index.php?route=login" class="btn btn-warning btn-sm">Administrador</a>
+                    <a href="<?= BASE_URL ?>" class="btn btn-outline-light btn-sm me-2">Catálogo</a>
+                    <a href="<?= BASE_URL ?>login" class="btn btn-warning btn-sm">Administrador</a>
                 </div>
             </div>
         </nav>

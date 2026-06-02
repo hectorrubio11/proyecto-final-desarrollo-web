@@ -2,7 +2,7 @@
 
 <h2>Registrar producto</h2>
 
-<form action="index.php?route=productos/store" method="post">
+<form action="<?= BASE_URL ?>productos/store" method="post">
     <div class="mb-3">
         <label class="form-label">SKU</label>
         <input type="text" name="sku" class="form-control" required>
@@ -29,7 +29,7 @@
     </div>
 
     <button class="btn btn-success" type="submit">Guardar</button>
-    <a href="index.php?route=productos" class="btn btn-secondary">Cancelar</a>
+    <a href="<?= BASE_URL ?>productos" class="btn btn-secondary">Cancelar</a>
 </form>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

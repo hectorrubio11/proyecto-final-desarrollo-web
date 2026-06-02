@@ -7,7 +7,7 @@
                 Iniciar Sesión
             </div>
             <div class="card-body">
-                <form action="index.php?route=auth/login" method="POST">
+                <form action="<?= BASE_URL ?>auth/login" method="POST">
                     <div class="mb-3">
                         <label class="form-label">Usuario</label>
                         <input type="text" name="username" class="form-control" required>

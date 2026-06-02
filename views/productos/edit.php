@@ -2,7 +2,7 @@
 
 <h2>Editar producto</h2>
 
-<form action="index.php?route=productos/update" method="post">
+<form action="<?= BASE_URL ?>productos/update" method="post">
     <input type="hidden" name="id" value="<?= (int)$producto['id']; ?>">
     <div class="mb-3">
         <label class="form-label">SKU</label>
@@ -36,7 +36,7 @@
     </div>
 
     <button class="btn btn-primary" type="submit">Actualizar</button>
-    <a href="index.php?route=productos" class="btn btn-secondary">Cancelar</a>
+    <a href="<?= BASE_URL ?>productos" class="btn btn-secondary">Cancelar</a>
 </form>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

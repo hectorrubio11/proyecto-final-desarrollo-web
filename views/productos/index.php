@@ -3,8 +3,8 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Administración de productos</h2>
     <div>
-        <a href="index.php?route=productos/create" class="btn btn-success">Nuevo producto</a>
-        <a href="index.php?route=logout" class="btn btn-danger">Cerrar sesión</a>
+        <a href="<?= BASE_URL ?>productos/create" class="btn btn-success">Nuevo producto</a>
+        <a href="<?= BASE_URL ?>logout" class="btn btn-danger">Cerrar sesión</a>
     </div>
 </div>
 
@@ -30,14 +30,13 @@
                 <td><?= htmlspecialchars($producto['precio_venta']); ?></td>
                 <td><?= (int)$producto['existencia']; ?></td>
                 <td>
-                    <a href="index.php?route=productos/edit&id=<?= (int)$producto['id']; ?>" 
+                    <a href="<?= BASE_URL ?>productos/edit/<?= $producto['id']; ?>" 
                     class="btn btn-primary btn-sm">Editar</a>
 
-                    <form action="index.php?route=productos/delete" method="POST"
-                    class="d-inline">
+                    <form action="<?= BASE_URL ?>productos/delete" method="POST" class="d-inline">
                         <input type="hidden" name="id" value="<?= (int)$producto['id']; ?>">
-                        <button class="btn btn-sm btn-danger" type="submit"
-                        onclick="return confirm('¿Deseas eliminar este producto?');">
+                        <button class="btn btn-sm btn-danger" type="submit" 
+                                onclick="return confirm('¿Deseas eliminar este producto?');">
                             Eliminar
                         </button>
                     </form>
