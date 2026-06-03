@@ -11,13 +11,10 @@ use Controllers\ProductoController;
 use Controllers\PublicController;
 use Controllers\BitacoraController;
 
-//Limpiamos la ruta para que no importe si tiene "/" al final
 $route = isset($_GET['route']) ? rtrim($_GET['route'], '/') : 'catalogo';
 
-// Separamos la ruta. Si es "productos/edit/2" -> $parts será ["productos", "edit", "2"]
 $parts = explode('/', $route);
 
-// Creamos una ruta base para el switch (sin el ID): "productos/edit"
 $controller_route = $parts[0] . (isset($parts[1]) ? '/' . $parts[1] : '');
 
 $authController = new AuthController();
@@ -26,6 +23,12 @@ $publicController = new PublicController();
 $bitacoraController = new BitacoraController();
 
 switch($controller_route){
+    case 'api/productos':
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $productoController->getProductsAPI();
+        }
+        break;
+
     case 'login':
         $authController->showLogin();
         break;
@@ -55,9 +58,8 @@ switch($controller_route){
         break;
 
     case 'productos/edit':
-        // Si la URL era "productos/edit/2", $parts[2] tiene el "2"
         if (isset($parts[2])) {
-            $_GET['id'] = $parts[2]; // Se lo asignamos a $_GET['id'] para que el controlador lo encuentre
+            $_GET['id'] = $parts[2]; 
         }
         $productoController->edit();
         break;

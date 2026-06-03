@@ -87,6 +87,10 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 Facultad de Informática Mazatlán.</p>
+        <p>© 2026 Facultad de Informática Mazatlán.<br>
+            <a href="<?= BASE_URL ?>api/productos" target="_blank">
+                API JSON
+            </a>
+        </p>
     </div>
 </footer>
