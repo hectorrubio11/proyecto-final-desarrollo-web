@@ -45,7 +45,8 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-
+<a href="<?= BASE_URL ?>productos/bitacora" 
+class="btn btn-secondary">Bitácora de administrador</a>
 <?php 
 require_once __DIR__ . '/../layouts/footer.php'; 
 ?>
