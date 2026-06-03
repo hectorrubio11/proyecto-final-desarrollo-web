@@ -9,16 +9,14 @@
     </div>
 </div>
 
-<form action="index.php" method="GET" class="row g-2 mb-4">
-    <input type="hidden" name="route" value="catalogo">
-
+<form action="<?= BASE_URL ?>catalogo/buscar" method="POST" class="row g-2 mb-4">
     <div class="col-md-10">
-        <input type="text" name="buscar" class="form-control"
-        placeholder="Buscar por nombre o descripción"
-        value="<?= htmlspecialchars($termino ?? '');  ?>">
+        <input type="text" name="termino" class="form-control" 
+               placeholder="Buscar por nombre o descripción"
+               value="<?= htmlspecialchars($termino ?? ''); ?>">
     </div>
     <div class="col-md-2">
-        <button class="btn btn-primary w-100">Buscar</button>
+        <button type="submit" class="btn btn-primary w-100">Buscar</button>
     </div>
 </form>
 

@@ -78,8 +78,21 @@ switch($controller_route){
         $bitacoraController->listar();
         break;
 
+    case 'catalogo/buscar':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $termino = $_POST['termino'] ?? '';
+            // Redirigimos a la URL limpia: /catalogo/termino
+            header("Location: " . BASE_URL . "catalogo/" . urlencode($termino));
+            exit;
+        }
+        break;
+
     case 'catalogo':
     default:
+        if (isset($parts[1]) && !empty($parts[1])) {
+                // IMPORTANTE: Aquí le pasamos el valor al Controlador vía $_GET
+                $_GET['buscar'] = $parts[1]; 
+            }
         $publicController->catalogo();
         break;
 }
