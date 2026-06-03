@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped align-middle">
     <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -17,6 +17,7 @@
             <th>Precio compra</th>
             <th>Precio venta</th>
             <th>Existencia</th>
+            <th>Imagen</th> 
             <th>Acciones</th>
         </tr>
     </thead>
@@ -29,6 +30,18 @@
                 <td><?= htmlspecialchars($producto['precio_compra']); ?></td>
                 <td><?= htmlspecialchars($producto['precio_venta']); ?></td>
                 <td><?= (int)$producto['existencia']; ?></td>
+                
+                <td>
+                    <?php if (!empty($producto['imagen'])): ?>
+                        <img src="<?= BASE_URL ?>img/<?= htmlspecialchars($producto['imagen']); ?>" 
+                             alt="Foto" 
+                             class="img-thumbnail" 
+                             style="width: 50px; height: 50px; object-fit: cover;">
+                    <?php else: ?>
+                        <span class="text-muted" style="font-size: 0.85rem;">Sin foto</span>
+                    <?php endif; ?>
+                </td>
+
                 <td>
                     <a href="<?= BASE_URL ?>productos/edit/<?= $producto['id']; ?>" 
                     class="btn btn-primary btn-sm">Editar</a>

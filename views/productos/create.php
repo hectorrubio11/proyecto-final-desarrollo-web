@@ -2,7 +2,12 @@
 
 <h2>Registrar producto</h2>
 
-<form action="<?= BASE_URL ?>productos/store" method="post">
+<?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger">
+        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+<form action="<?= BASE_URL ?>productos/store" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label">SKU</label>
         <input type="text" name="sku" class="form-control" required>
@@ -26,6 +31,11 @@
     <div class="mb-3">
         <label class="form-label">Existencia</label>
         <input type="number" name="existencia" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Imagen del producto</label>
+        <input type="file" name="imagen" class="form-control" accept="image/*">
     </div>
 
     <button class="btn btn-success" type="submit">Guardar</button>
