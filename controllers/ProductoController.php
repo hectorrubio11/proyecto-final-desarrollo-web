@@ -60,8 +60,7 @@ class ProductoController{
 
         if (!is_numeric($data['precio_compra']) || !is_numeric($data['precio_venta'])
         || !is_numeric($data['existencia'])) {
-            $_SESSION['error'] = 'Precio de compra, precio de venta y 
-            existencia deben ser numéricos.';
+            $_SESSION['error'] = 'Precio de compra, precio de venta y existencia deben ser numéricos.';
             header('Location: '. BASE_URL .'productos/create');
             exit;
         }
@@ -132,8 +131,7 @@ class ProductoController{
 
         if (!is_numeric($data['precio_compra']) || !is_numeric($data['precio_venta'])
         || !is_numeric($data['existencia'])) {
-            $_SESSION['error'] = 'Precio de compra, precio de venta y 
-            existencia deben ser numéricos.';
+            $_SESSION['error'] = 'Precio de compra, precio de venta y existencia deben ser numéricos.';
             header('Location: '. BASE_URL .'productos/edit/' . $id);
             exit;
         }
@@ -153,7 +151,6 @@ class ProductoController{
 
         header('Location: '. BASE_URL .'productos');
         exit;
-
     }
 
     public function delete(): void{
@@ -174,7 +171,24 @@ class ProductoController{
 
         header('Location: '. BASE_URL .'productos');
         exit;
+    }
 
+    public function getProductsAPI(): void {
+        header("Content-Type: application/json; charset=UTF-8");
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET");
+        header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+
+        $productos = $this->productoModel->obtenerTodos();
+
+        if (!empty($productos)){
+            http_response_code(200);
+            echo json_encode($productos, JSON_UNESCAPED_UNICODE);
+        } else {
+            http_response_code(404);
+            echo json_encode(["message" => "No se encontraron productos"]);
+        }
+        exit;
     }
 }
 ?>
