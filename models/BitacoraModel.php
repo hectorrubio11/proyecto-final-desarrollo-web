@@ -32,4 +32,10 @@ class BitacoraModel {
             return false;
         }
     }
+
+    public function listarTodos(){
+        $sql = "SELECT id, usuario, accion, fecha FROM bitacora";
+        $query = $this->db->query($sql);
+        return $query->fetchAll();
+    }
 }

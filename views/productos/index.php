@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped mb-4">
     <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -45,8 +45,9 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<a href="<?= BASE_URL ?>productos/bitacora" 
-class="btn btn-secondary">Bitácora de administrador</a>
+<div class="text-center">
+    <a href="<?= BASE_URL ?>bitacora" class="btn btn-secondary">Bitácora de administrador</a>
+</div>
 <?php 
 require_once __DIR__ . '/../layouts/footer.php'; 
 ?>

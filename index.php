@@ -9,6 +9,7 @@ require_once __DIR__ . '/config/Autoload.php';
 use Controllers\AuthController;
 use Controllers\ProductoController;
 use Controllers\PublicController;
+use Controllers\BitacoraController;
 
 //Limpiamos la ruta para que no importe si tiene "/" al final
 $route = isset($_GET['route']) ? rtrim($_GET['route'], '/') : 'catalogo';
@@ -22,6 +23,7 @@ $controller_route = $parts[0] . (isset($parts[1]) ? '/' . $parts[1] : '');
 $authController = new AuthController();
 $productoController = new ProductoController();
 $publicController = new PublicController();
+$bitacoraController = new BitacoraController();
 
 switch($controller_route){
     case 'login':
@@ -70,6 +72,10 @@ switch($controller_route){
         if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             $productoController->delete();
         }
+        break;
+    
+    case 'bitacora':
+        $bitacoraController->listar();
         break;
 
     case 'catalogo':
