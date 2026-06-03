@@ -1,0 +1,1 @@
+[2026-06-03 06:57:23] ERROR DB: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'tienda_mvc.bitacora' doesn't exist | Intentó: Invitado -> Producto con ID 4 eliminado

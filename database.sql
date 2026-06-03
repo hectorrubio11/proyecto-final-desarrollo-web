@@ -1,0 +1,8 @@
+
+
+CREATE TABLE bitacora (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(100),
+    accion TEXT,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

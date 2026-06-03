@@ -2,13 +2,17 @@
 namespace Controllers;
 
 use Models\ProductoModel;
+use Models\BitacoraModel;
 
 class ProductoController{
     private ProductoModel $productoModel;
+    private BitacoraModel $bitacora;
+    private $usuario;
 
     public function __construct()
     {
         $this->productoModel = new ProductoModel();
+        $this->bitacora = new BitacoraModel();
     }
 
     public function verificarSesion(): void{
@@ -20,6 +24,8 @@ class ProductoController{
             header('Location: '. BASE_URL .'login');
             exit;
         }
+
+        $this->usuario = $_SESSION['admin']['username'] ?? 'Invitado';
     }
 
     public function index(): void{
@@ -74,8 +80,10 @@ class ProductoController{
         }
 
         if ($this->productoModel->crear($data)){
+            $this->bitacora->log($this->usuario, "Producto ". $data['nombre'] ." agregado");
             $_SESSION['success'] = 'Producto registrado correctamente.';
         } else {
+            $this->bitacora->log($this->usuario, "FALLO al agregar nuevo producto");
             $_SESSION['error'] = 'No fue posible registrar el producto';
         }
 
@@ -132,8 +140,7 @@ class ProductoController{
 
         if (!is_numeric($data['precio_compra']) || !is_numeric($data['precio_venta'])
         || !is_numeric($data['existencia'])) {
-            $_SESSION['error'] = 'Precio de compra, precio de venta y 
-            existencia deben ser numéricos.';
+            $_SESSION['error'] = 'Precio de compra, precio de venta y existencia deben ser numéricos.';
             header('Location: '. BASE_URL .'productos/edit/' . $id);
             exit;
         }
@@ -146,8 +153,10 @@ class ProductoController{
         }
 
         if ($this->productoModel->actualizar($id, $data)){
+            $this->bitacora->log($this->usuario, "Producto con ID ".$id." actualizado");
             $_SESSION['success'] = 'Producto actualizado correctamente.';
         } else {
+            $this->bitacora->log($this->usuario, "FALLO al actualizar producto con ID ".$id);
             $_SESSION['error'] = 'No fue posible actualizar el producto.';
         }
 
@@ -167,14 +176,15 @@ class ProductoController{
         }
 
         if ($this->productoModel->eliminar($id)){
+            $this->bitacora->log($this->usuario, "Producto con ID ".$id." eliminado");
             $_SESSION['success'] = 'Producto eliminado correctamente.';
         } else {
+            $this->bitacora->log($this->usuario, "FALLO al intentar eliminar producto ID: " . $id);
             $_SESSION['error'] = 'No fue posible eliminar el producto.';
         }
 
         header('Location: '. BASE_URL .'productos');
         exit;
-
     }
 }
 ?>

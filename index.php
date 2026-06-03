@@ -2,6 +2,7 @@
 
 $baseDir = str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 define('BASE_URL', $baseDir);
+define('BASE_PATH', __DIR__);
 
 require_once __DIR__ . '/config/Autoload.php';
 
