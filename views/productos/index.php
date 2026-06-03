@@ -45,7 +45,7 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-<div class="text-center">
+<div class="text-center mb-4">
     <a href="<?= BASE_URL ?>bitacora" class="btn btn-secondary">Bitácora de administrador</a>
 </div>
 <?php 
