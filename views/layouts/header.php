@@ -1,4 +1,10 @@
-<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+<?php 
+if (session_status() === PHP_SESSION_NONE) session_start(); 
+// Si no existe un token para esta sesión, lo creamos
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
 
 <!DOCTYPE html>
 <html>

@@ -41,6 +41,7 @@ class ProductoController{
 
     public function store(): void {
         $this->verificarSesion();
+        $this->validarCSRF();
 
         $data = [
             'sku' => trim($_POST['sku'] ?? ''),
@@ -143,6 +144,7 @@ class ProductoController{
 
     public function update(): void{
         $this->verificarSesion();
+        $this->validarCSRF();
 
         $id = (int)($_POST['id'] ?? 0);
 
@@ -245,6 +247,7 @@ class ProductoController{
 
     public function delete(): void{
         $this->verificarSesion();
+        $this->validarCSRF();
         $id = (int)($_POST['id'] ?? 0);
 
         if ($id <= 0){
@@ -291,5 +294,13 @@ class ProductoController{
         }
         exit;
     }
+    //validación CSRF
+    private function validarCSRF(): void {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $_SESSION['error'] = "Error de seguridad: Intento de falsificación de petición (CSRF).";
+        header('Location: ' . BASE_URL . 'productos');
+        exit;
+    }
+}
 }
 ?>

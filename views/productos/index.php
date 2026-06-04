@@ -47,6 +47,7 @@
                     class="btn btn-primary btn-sm">Editar</a>
 
                     <form action="<?= BASE_URL ?>productos/delete" method="POST" class="d-inline">
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                         <input type="hidden" name="id" value="<?= (int)$producto['id']; ?>">
                         <button class="btn btn-sm btn-danger" type="submit" 
                                 onclick="return confirm('¿Deseas eliminar este producto?');">

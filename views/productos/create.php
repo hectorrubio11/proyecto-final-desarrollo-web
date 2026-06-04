@@ -8,6 +8,7 @@
     </div>
 <?php endif; ?>
 <form action="<?= BASE_URL ?>productos/store" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <div class="mb-3">
         <label class="form-label">SKU</label>
         <input type="text" name="sku" class="form-control" required>
