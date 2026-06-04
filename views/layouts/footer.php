@@ -87,6 +87,13 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 Facultad de Informática Mazatlán.</p>
+        <p>© 2026 Facultad de Informática Mazatlán.
+            <br>
+            <?php if (isset($_GET['route']) && ($_GET['route'] === 'productos' || $_GET['route'] === 'bitacora')): ?>
+                <a href="<?= BASE_URL ?>api/productos" target="_blank">
+                    Ver API JSON
+                </a>
+            <?php endif; ?> 
+        </p>
     </div>
 </footer>

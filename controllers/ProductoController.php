@@ -183,8 +183,6 @@ class ProductoController{
 
         header('Location: '. BASE_URL .'productos');
         exit;
-<<<<<<< HEAD
-=======
     }
 
     public function getProductsAPI(): void {
@@ -203,7 +201,6 @@ class ProductoController{
             echo json_encode(["message" => "No se encontraron productos"]);
         }
         exit;
->>>>>>> integracion-api-productos
     }
 }
 ?>
