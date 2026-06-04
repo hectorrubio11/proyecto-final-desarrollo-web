@@ -9,6 +9,7 @@
 <?php endif; ?>
 
 <form action="<?= BASE_URL ?>productos/update" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
     <input type="hidden" name="id" value="<?= (int)$producto['id']; ?>">
     <div class="mb-3">
         <label class="form-label">SKU</label>
