@@ -64,9 +64,9 @@ class ProductoModel{
             $this->conexion->beginTransaction();
 
             $sql = 'INSERT INTO productos 
-            (sku, nombre, descripcion, precio_compra, precio_venta, existencia)
+            (sku, nombre, descripcion, precio_compra, precio_venta, existencia, imagen)
             VALUES (:sku, :nombre, :descripcion, :precio_compra,
-            :precio_venta, :existencia)';
+            :precio_venta, :existencia, :imagen)';
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':sku', $data['sku']);
             $stmt->bindParam(':nombre', $data['nombre']);
@@ -74,6 +74,7 @@ class ProductoModel{
             $stmt->bindParam(':precio_compra', $data['precio_compra']);
             $stmt->bindParam(':precio_venta', $data['precio_venta']);
             $stmt->bindParam(':existencia', $data['existencia'], PDO::PARAM_INT);
+            $stmt->bindParam(':imagen', $data['imagen']);
 
             $resultado = $stmt->execute();
             if (!$resultado){
@@ -101,7 +102,8 @@ class ProductoModel{
                 descripcion = :descripcion, 
                 precio_compra = :precio_compra, 
                 precio_venta = :precio_venta, 
-                existencia = :existencia
+                existencia = :existencia,
+                imagen = :imagen
             WHERE id = :id';
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':sku', $data['sku']);
@@ -111,6 +113,7 @@ class ProductoModel{
             $stmt->bindParam(':precio_venta', $data['precio_venta']);
             $stmt->bindParam(':existencia', $data['existencia'], PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':imagen', $data['imagen']);
             $stmt->execute();
 
             $this->conexion->commit();
@@ -144,6 +147,61 @@ class ProductoModel{
                 $this->conexion->rollBack();
             }
             return false;
+        }
+    }
+
+    // Buscar si el SKU ya existe en la base de datos
+    public function existeSku(string $sku, int $idExcluir = 0): bool{
+        try{
+            $sql = 'SELECT COUNT(*) FROM productos WHERE sku = :sku AND id != :id';
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':sku', $sku);
+            $stmt->bindParam(':id', $idExcluir, PDO::PARAM_INT);
+            $stmt->execute();
+            return (int)$stmt->fetchColumn() > 0;
+        } catch (PDOException $e){
+            return false;
+        }
+    }
+
+    // Contar el total de productos para la paginacion
+    public function contarPublico(string $termino = ''): int {
+        try {
+            if (trim($termino) === '') {
+                $sql = 'SELECT COUNT(*) FROM productos';
+                $stmt = $this->conexion->query($sql);
+            } else {
+                $sql = 'SELECT COUNT(*) FROM productos WHERE nombre LIKE :termino OR descripcion LIKE :termino';
+                $stmt = $this->conexion->prepare($sql);
+                $busqueda = '%' . $termino . '%';
+                $stmt->bindParam(':termino', $busqueda);
+                $stmt->execute();
+            }
+            return (int)$stmt->fetchColumn();
+        } catch (PDOException $e) {
+            return 0;
+        }
+    }
+
+    // Obtener productos paginados
+    public function obtenerPaginados(int $limite, int $offset, string $termino = ''): array {
+        try {
+            if (trim($termino) === '') {
+                $sql = 'SELECT * FROM productos ORDER BY id DESC LIMIT :limite OFFSET :offset';
+                $stmt = $this->conexion->prepare($sql);
+            } else {
+                $sql = 'SELECT * FROM productos WHERE nombre LIKE :termino OR descripcion LIKE :termino ORDER BY id DESC LIMIT :limite OFFSET :offset';
+                $stmt = $this->conexion->prepare($sql);
+                $busqueda = '%' . $termino . '%';
+                $stmt->bindParam(':termino', $busqueda);
+            }
+            
+            $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            return [];
         }
     }
 }
