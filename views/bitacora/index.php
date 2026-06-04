@@ -43,7 +43,7 @@ require_once 'views/layouts/header.php';
         </div>
     </div>
     <div class="text-center mb-4">
-        <a href="<?= BASE_URL ?>productos" class="btn btn-secondary">Volver al catálogo</a>
+        <a href="<?= BASE_URL ?>productos" class="btn btn-secondary">Regresar</a>
     </div>    
 </div>
 
