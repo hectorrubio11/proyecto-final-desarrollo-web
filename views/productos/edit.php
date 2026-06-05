@@ -1,4 +1,35 @@
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
+<?php
+/**
+ * Vista de Administración - Formulario de Modificación de Productos
+ *
+ * Despliega una interfaz precargada para la edición de las propiedades de un
+ * producto existente. Utiliza la inyección de datos de forma segura mediante
+ * funciones de escape para mitigar vulnerabilidades XSS, mantiene un campo oculto
+ * con el identificador del registro (ID) y un token CSRF de control, e implementa
+ * una estructura condicional visual para previsualizar la miniatura de la imagen actual.
+ *
+ * @package Views
+ * @subpackage Admin
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @requires views/layouts/header.php Componente de cabecera general de la aplicación.
+ * @requires views/layouts/footer.php Componente de pie de página general de la aplicación.
+ * @global array $_SESSION['csrf_token'] Código criptográfico para la validación de peticiones seguras.
+ * @global string $_SESSION['error'] Mensaje de alerta flash en caso de fallo en la validación del negocio.
+ * @var array $producto {
+ * Estructura asociativa con la información actual del producto cargado desde el controlador.
+ *
+ * @type int|string $id Identificador único del registro en la base de datos.
+ * @type string $sku Código único identificador de almacén.
+ * @type string $nombre Nombre descriptivo del producto.
+ * @type string $descripcion Detalle extenso del artículo.
+ * @type float|string $precio_compra Costo original de adquisición.
+ * @type float|string $precio_venta Precio fijado para el consumidor final.
+ * @type int $existencia Unidades disponibles en stock.
+ * @type string|null $imagen Nombre del archivo binario o ruta de la imagen registrada.
+ * }
+ */
+require_once __DIR__ . '/../layouts/header.php'; 
+?>
 
 <h2>Editar producto</h2>
 

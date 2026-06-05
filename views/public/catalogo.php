@@ -1,4 +1,25 @@
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
+<?php
+/**
+ * Vista de Catálogo Público - Navegación de Inventario
+ *
+ * Interfaz principal orientada al consumidor final. Permite visualizar el catálogo
+ * disponible, ejecutar filtros de búsqueda por texto y navegar a través de los resultados
+ * mediante un sistema de paginación. Gestiona la presentación visual de las tarjetas
+ * de producto, incluyendo el formateo de precios, el escape de caracteres para seguridad XSS,
+ * y la renderización condicional de imágenes.
+ *
+ * @package Views
+ * @subpackage Public
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @requires views/layouts/header.php Componente de cabecera general de la aplicación.
+ * @requires views/layouts/footer.php Componente de pie de página general de la aplicación.
+ * @var array $productos Colección de registros de productos recuperados para la página actual.
+ * @var string $termino El criterio de búsqueda persistido en el input de filtrado.
+ * @var int $paginaActual Número de página seleccionada actualmente.
+ * @var int $totalPaginas Número total de páginas disponibles para navegación.
+ */
+require_once __DIR__ . '/../layouts/header.php'; 
+?>
 
 <div class="row mb-4">
     <div class="col-md-8">

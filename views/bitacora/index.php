@@ -1,4 +1,27 @@
 <?php 
+/**
+ * Vista de Administración - Historial de Bitácora
+ *
+ * Renderiza una interfaz tabular responsiva para auditar las actividades del sistema.
+ * Consume una colección de registros e itera sobre ellos aplicando mecanismos de 
+ * escape seguro para evitar vulnerabilidades de Cross-Site Scripting (XSS). En caso 
+ * de no contener datos, despliega un estado vacío controlado.
+ *
+ * @package Views
+ * @subpackage Admin
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @requires views/layouts/header.php Componente de cabecera general de la aplicación.
+ * @requires views/layouts/footer.php Componente de pie de página general de la aplicación.
+ * * @var array $logs {
+ * Colección bidimensional transferida por el controlador con los eventos de auditoría.
+ *
+ * @type int|string $id Identificador único del registro de bitácora.
+ * @type string $usuario Nombre del operador que ejecutó la acción.
+ * @type string $accion Descripción detallada del movimiento o evento realizado.
+ * @type string $fecha Marca de tiempo del registro (YYYY-MM-DD HH:MM:SS).
+ * }
+ */
+
 // Cargamos las piezas del layout directamente aquí
 require_once 'views/layouts/header.php'; 
 ?>

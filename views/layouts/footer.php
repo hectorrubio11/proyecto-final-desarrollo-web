@@ -1,3 +1,19 @@
+<?php
+/**
+ * Layout de Cierre - Pie de Página General (Footer)
+ *
+ * Renderiza la sección inferior de la interfaz gráfica del sistema. Incorpora
+ * los estilos CSS necesarios para implementar un "Sticky Footer" que se adhiere 
+ * al fondo de la ventana mediante Flexbox, despliega los créditos institucionales 
+ * de la facultad y evalúa dinámicamente la ruta actual para proveer un acceso 
+ * directo condicional hacia el endpoint de la API JSON.
+ *
+ * @package Views
+ * @subpackage Layouts
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @global array $_GET['route'] Analiza este parámetro de la URL para determinar si se expone el enlace a la API.
+ */
+?>
 <style>
     .main-footer {
         background-color: #1a1d20;

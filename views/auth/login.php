@@ -1,4 +1,18 @@
-<?php require_once __DIR__ . '/../layouts/header.php';?>
+<?php
+/**
+ * Vista de Autenticación - Formulario de Login
+ *
+ * Interfaz de usuario para el inicio de sesión administrativo. Despliega un panel
+ * con campos validados en el cliente para capturar las credenciales (usuario y contraseña)
+ * y enviarlas vía POST hacia el controlador de autenticación.
+ *
+ * @package Views
+ * @subpackage Auth
+ * * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @requires views/layouts/header.php Componente de cabecera general de la aplicación.
+ */
+require_once __DIR__ . '/../layouts/header.php';
+?>
 
 <div class="row justify-content-center">
     <div class="col-md-5">

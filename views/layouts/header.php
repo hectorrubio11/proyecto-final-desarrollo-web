@@ -1,4 +1,20 @@
 <?php 
+/**
+ * Layout de Apertura - Cabecera General (Header)
+ *
+ * Este componente inicializa el estado de la sesión si no ha sido iniciado,
+ * genera un token criptográfico CSRF seguro para la protección de formularios,
+ * carga las dependencias de Bootstrap 5 en el cliente y gestiona la renderización
+ * de mensajes flash de éxito o error almacenados en la sesión.
+ *
+ * @package Views
+ * @subpackage Layouts
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @global array $_SESSION['csrf_token'] Almacena el token de seguridad para validación de peticiones POST.
+ * @global string $_SESSION['success'] Mensaje flash de operación exitosa (se elimina tras renderizar).
+ * @global string $_SESSION['error'] Mensaje flash de error en la operación (se elimina tras renderizar).
+ */
+
 if (session_status() === PHP_SESSION_NONE) session_start(); 
 // Si no existe un token para esta sesión, lo creamos
 if (empty($_SESSION['csrf_token'])) {

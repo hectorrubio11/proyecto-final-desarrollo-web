@@ -1,4 +1,33 @@
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
+<?php
+/**
+ * Vista de Administración - Panel de Control del Inventario (CRUD)
+ *
+ * Renderiza la interfaz principal de gestión de productos exclusiva para operadores
+ * autenticados. Despliega un catálogo tabular que incluye identificadores de almacén, 
+ * previsualización controlada de imágenes fijando su relación de aspecto, y acciones directas
+ * de mutación. Las eliminaciones se procesan de forma segura a través de formularios
+ * individuales acoplados con validación de tokens CSRF y confirmación en el cliente.
+ *
+ * @package Views
+ * @subpackage Admin
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @requires views/layouts/header.php Componente de cabecera general de la aplicación.
+ * @requires views/layouts/footer.php Componente de pie de página general de la aplicación.
+ * @global array $_SESSION['csrf_token'] Clave criptográfica para la autenticación de peticiones POST de eliminación.
+ * @var array $productos {
+ * Colección bidimensional de registros de productos recuperados para la cuadrícula administrativa.
+ *
+ * @type int|string $id Clave primaria del producto.
+ * @type string $sku Código único identificador de almacén.
+ * @type string $nombre Nombre comercial del artículo.
+ * @type float|string $precio_compra Costo original de adquisición.
+ * @type float|string $precio_venta Precio fijado para el consumidor final.
+ * @type int $existencia Unidades disponibles en stock.
+ * @type string|null $imagen Nombre o ruta del archivo binario de imagen.
+ * }
+ */
+require_once __DIR__ . '/../layouts/header.php'; 
+?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Administración de productos</h2>

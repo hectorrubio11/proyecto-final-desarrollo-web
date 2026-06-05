@@ -1,4 +1,23 @@
-<?php require_once __DIR__ . '/../layouts/header.php'; ?>
+<?php
+/**
+ * Vista de Administración - Formulario de Alta de Productos
+ *
+ * Despliega una interfaz de formulario estructurada para la captura y registro
+ * de nuevos productos en el sistema. Implementa soporte nativo para la carga de
+ * archivos multimedia (imágenes) mediante atributos de codificación multipart, 
+ * e incluye mecanismos de protección contra falsificación de peticiones en sitios
+ * cruzados utilizando un campo oculto inyectado con el token CSRF de la sesión.
+ *
+ * @package Views
+ * @subpackage Admin
+ * @uses BASE_URL Constante global para la resolución de rutas relativas y absolutas del proyecto.
+ * @requires views/layouts/header.php Componente de cabecera general de la aplicación.
+ * @requires views/layouts/footer.php Componente de pie de página general de la aplicación.
+ * @global array $_SESSION['csrf_token'] Clave criptográfica utilizada para validar la legitimidad del origen del formulario.
+ * @global string $_SESSION['error'] Mensaje flash de error local en caso de fallas de validación específicas.
+ */
+require_once __DIR__ . '/../layouts/header.php'; 
+?>
 
 <h2>Registrar producto</h2>
 

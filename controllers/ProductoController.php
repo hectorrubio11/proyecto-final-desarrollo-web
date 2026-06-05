@@ -4,17 +4,48 @@ namespace Controllers;
 use Models\ProductoModel;
 use Models\BitacoraModel;
 
+/**
+ * Gestión de Productos (ProductoController)
+ *
+ * Clase encargada de coordinar el ciclo de vida del catálogo de productos.
+ * Controla las verificaciones de seguridad (Sesiones y CSRF), operaciones CRUD,
+ * procesamiento y almacenamiento seguro de imágenes, auditoría en bitácora
+ * y exposición de datos a través de servicios API JSON.
+ */
 class ProductoController{
+    /**
+     * @var ProductoModel Instancia del modelo de productos para interactuar con la base de datos.
+     */
     private ProductoModel $productoModel;
+    
+    /**
+     * @var BitacoraModel Instancia del modelo de bitácora para el registro histórico de operaciones.
+     */
     private BitacoraModel $bitacora;
+    
+    /**
+     * @var mixed Almacena el identificador del usuario administrador en la sesión actual.
+     */
     private $usuario;
 
+    /**
+     * Inicializa el controlador construyendo las instancias necesarias para operar.
+     */
     public function __construct()
     {
         $this->productoModel = new ProductoModel();
         $this->bitacora = new BitacoraModel();
     }
 
+    /**
+     * Verifica la existencia de una sesión válida de administrador.
+     *
+     * Inicializa el sistema de sesiones de PHP si no se ha iniciado antes y
+     * comprueba los privilegios. Si no se detectan credenciales activas,
+     * detiene el flujo y redirige a la interfaz de login.
+     *
+     * @return void
+     */
     public function verificarSesion(): void{
         if (session_status() === PHP_SESSION_NONE){
             session_start();
@@ -28,17 +59,42 @@ class ProductoController{
         $this->usuario = $_SESSION['admin']['username'] ?? 'Invitado';
     }
 
+    /**
+     * Muestra la vista del catálogo general de productos.
+     *
+     * Invoca la validación de sesión activa, recopila todos los registros de
+     * productos desde el modelo y los transfiere a la vista correspondiente.
+     *
+     * @return void
+     */
     public function index(): void{
         $this->verificarSesion();
         $productos = $this->productoModel->obtenerTodos();
         require_once __DIR__ . '/../views/productos/index.php';
     }
 
+    /**
+     * Carga el formulario de registro para un nuevo producto.
+     *
+     * Garantiza la autenticación del usuario antes de desplegar la vista de inserción.
+     *
+     * @return void
+     */
     public function create(): void{
         $this->verificarSesion();
         require_once __DIR__ . '/../views/productos/create.php';
     }
 
+    /**
+     * Procesa y almacena un nuevo producto en el sistema.
+     *
+     * Valida la integridad de la petición por token CSRF, limpia las entradas POST,
+     * comprueba campos obligatorios, restricciones numéricas y de negocio (precios no negativos,
+     * relación costo/venta, SKU único). Administra la subida y renombrado único de imágenes
+     * antes de persistir la información y registrar el evento en la bitácora.
+     *
+     * @return void
+     */
     public function store(): void {
         $this->verificarSesion();
         $this->validarCSRF();
@@ -128,6 +184,15 @@ class ProductoController{
         exit;
     }
 
+    /**
+     * Muestra la vista de edición cargando la información de un producto específico.
+     *
+     * Verifica la sesión, procesa el identificador enviado mediante GET, y solicita
+     * la información del registro. En caso de no encontrar coincidencias, redirige
+     * notificando el percance.
+     *
+     * @return void
+     */
     public function edit(): void{
         $this->verificarSesion();
         $id = (int)($_GET['id'] ?? 0);
@@ -142,6 +207,15 @@ class ProductoController{
         require_once __DIR__ . '/../views/productos/edit.php';
     }
 
+    /**
+     * Procesa la actualización de los datos de un producto determinado.
+     *
+     * Valida el token CSRF y analiza los datos modificados. Si se detecta la carga
+     * de una nueva imagen, se genera un nombre único para guardarla en el disco y se
+     * remueve físicamente el archivo de imagen obsoleto para optimizar almacenamiento.
+     *
+     * @return void
+     */
     public function update(): void{
         $this->verificarSesion();
         $this->validarCSRF();
@@ -245,6 +319,15 @@ class ProductoController{
         exit;
     }
 
+    /**
+     * Elimina un producto de manera permanente.
+     *
+     * Ejecuta validaciones de sesión y CSRF, verifica la validez del ID y,
+     * tras borrar el registro de la base de datos de manera exitosa, destruye
+     * físicamente el archivo de imagen vinculado al disco local si este existía.
+     *
+     * @return void
+     */
     public function delete(): void{
         $this->verificarSesion();
         $this->validarCSRF();
@@ -277,6 +360,15 @@ class ProductoController{
         exit;
     }
 
+    /**
+     * Expone el catálogo completo de productos en formato API RESTful.
+     *
+     * Inyecta las cabeceras HTTP nativas necesarias para responder en JSON y
+     * habilitar las políticas de control de acceso CORS. Devuelve los registros
+     * con código de respuesta 200 o un mensaje de error con estatus 404.
+     *
+     * @return void
+     */
     public function getProductsAPI(): void {
         header("Content-Type: application/json; charset=UTF-8");
         header("Access-Control-Allow-Origin: *");
@@ -294,13 +386,21 @@ class ProductoController{
         }
         exit;
     }
-    //validación CSRF
+
+    /**
+     * Valida el token de seguridad contra Falsificación de Petición en Sitios Cruzados.
+     *
+     * Compara de forma estricta el token CSRF adjunto en la petición POST contra el
+     * token resguardado en la sesión activa del servidor, bloqueando intrusiones.
+     *
+     * @return void
+     */
     private function validarCSRF(): void {
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        $_SESSION['error'] = "Error de seguridad: Intento de falsificación de petición (CSRF).";
-        header('Location: ' . BASE_URL . 'productos');
-        exit;
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            $_SESSION['error'] = "Error de seguridad: Intento de falsificación de petición (CSRF).";
+            header('Location: ' . BASE_URL . 'productos');
+            exit;
+        }
     }
-}
 }
 ?>
