@@ -22,5 +22,5 @@ Contraseña: admin123
 
 Rutas principales:
 
-Catálogo público: http://localhost/tienda_mvc/
-Login admin: http://localhost/tienda_mvc/index.php?route=login
+Catálogo público: http://tienda-mvc.atwebpages.com/
+Login admin: http://tienda-mvc.atwebpages.com/login
