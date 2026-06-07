@@ -128,8 +128,7 @@ class ProductoController{
             exit;
         }
 
-        if ((float)$data['precio_compra'] < 0 || (float)$data['precio_venta'] < 0 ||
-        (int)$data['existencia'] < 0 ){
+        if ((float)$data['precio_compra'] < 0 || (float)$data['precio_venta'] < 0 ){
             $_SESSION['error'] = 'No se permiten valores negativos.';
             header('Location: '. BASE_URL .'productos/create');
             exit;
@@ -257,8 +256,7 @@ class ProductoController{
             exit;
         }
 
-        if ((float)$data['precio_compra'] < 0 || (float)$data['precio_venta'] < 0 ||
-        (int)$data['existencia'] < 0 ){
+        if ((float)$data['precio_compra'] < 0 || (float)$data['precio_venta'] < 0){
             $_SESSION['error'] = 'No se permiten valores negativos.';
             header('Location: '. BASE_URL .'productos/edit/' . $id);
             exit;
